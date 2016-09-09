@@ -69,6 +69,29 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         pdfPainter.end()
         print("done")
 
+
+    def drukujDoPNG(self, c):	
+        dpi = c.printResolution()
+        dpmm = dpi / 25.4
+        width = int(dpmm * c.paperWidth())
+        height = int(dpmm * c.paperHeight())
+        
+        # tworzenie obrazu wyjściowego i jego inicjalizacja
+        image = QImage(QSize(width, height), QImage.Format_ARGB32)
+        image.setDotsPerMeterX(dpmm * 1000)
+        image.setDotsPerMeterY(dpmm * 1000)
+        image.fill(0)
+
+        # renderowanie
+        imagePainter = QPainter(image)
+        sourceArea = QRectF(0, 0, c.paperWidth(), c.paperHeight())
+        targetArea = QRectF(0, 0, width, height)
+        c.render(imagePainter, targetArea, sourceArea)
+        imagePainter.end()
+
+        image.save(self.filepath, "png")
+        print("Utworzono png")
+
     def mapa(self):
         mapRender = self.iface.mapCanvas().mapRenderer()
         c = QgsComposition(mapRender)
@@ -83,3 +106,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         if self.btnPDF.isChecked():
             self.openBrowse(".pdf")
 	    self.drukujDoPDF(c)
+
+        if self.btnPNG.isChecked():
+            self.openBrowse(".png")
+	    self.drukujDoPNG(c)
