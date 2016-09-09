@@ -44,4 +44,10 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
         self.iface = iface
+        self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
+        self.btnDruk.clicked.connect(self.OpenBrowse) # przypisuje metode OpenBrowse do klikniecia przycisku Drukuj
+
+    def OpenBrowse(self):
+        # otwieranie okienka z opcją zapisu pliku
+        self.filepath = QFileDialog.getSaveFileName()
 
