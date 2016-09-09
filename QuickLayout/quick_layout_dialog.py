@@ -47,9 +47,10 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
 
-    def openBrowse(self):
+    def openBrowse(self, rozszerzenie):
         # otwieranie okienka z opcją zapisu pliku
         self.filepath = QFileDialog.getSaveFileName()
+        self.filepath += rozszerzenie
 
     def drukujDoPDF(self, c):
 	# c - kompozycja qgisa
@@ -79,6 +80,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         composerMap = QgsComposerMap(c, x, y, w, h)
         c.addItem(composerMap)
 
-        self.openBrowse()
         if self.btnPDF.isChecked():
+            self.openBrowse(".pdf")
 	    self.drukujDoPDF(c)
