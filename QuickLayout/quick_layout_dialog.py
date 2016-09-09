@@ -45,19 +45,21 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         self.setupUi(self)
         self.iface = iface
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
-        self.btnDruk.clicked.connect(self.OpenBrowse) # przypisuje metode OpenBrowse do klikniecia przycisku Drukuj
+        self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
 
-    def OpenBrowse(self):
+    def openBrowse(self):
         # otwieranie okienka z opcją zapisu pliku
         self.filepath = QFileDialog.getSaveFileName()
 
     def mapa(self):
-        mapRender = self.iface.mapCanvas().mapRender()
-        c = QgsComposition(mapRenderer)
-        c.setPlotStyle(qgsComposition.Print)
+        mapRender = self.iface.mapCanvas().mapRenderer()
+        c = QgsComposition(mapRender)
+        c.setPlotStyle(QgsComposition.Print)
 
         # dodanie mapy do wydruku
         x, y =0, 0
         w, h = c.paperWidth(), c.paperHeight()
         composerMap = QgsComposerMap(c, x, y, w, h)
         c.addItem(composerMap)
+
+        self.openBrowse() # 
