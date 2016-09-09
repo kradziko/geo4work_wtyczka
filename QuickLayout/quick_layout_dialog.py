@@ -21,16 +21,20 @@
  ***************************************************************************/
 """
 
-import os
+import os, sys
 
 from PyQt4 import QtGui, uic
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+from qgis.core import *
+from qgis.gui import *
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'quick_layout_dialog_base.ui'))
 
 
 class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
-    def __init__(self, parent=None):
+    def __init__(self, iface, parent=None):
         """Constructor."""
         super(QuickLayoutDialog, self).__init__(parent)
         # Set up the user interface from Designer.
@@ -39,3 +43,5 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+        self.iface = iface
+

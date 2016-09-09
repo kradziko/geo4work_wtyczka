@@ -59,7 +59,7 @@ class QuickLayout:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = QuickLayoutDialog()
+        self.dlg = QuickLayoutDialog(self.iface)
 
         # Declare instance attributes
         self.actions = []
