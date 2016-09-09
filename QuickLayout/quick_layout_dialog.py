@@ -53,15 +53,13 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 
     def drukujDoPDF(self, c):
 	# c - kompozycja qgisa
-	printer = QPrinter()
-        printer.setOutputFormat(QPrinter.PdfFormat)
-        file_path = self.filepath
-        printer.setOutputFileName(file_path)
-        printer.setPaperSize(QSizeF(c.paperWidth(), c.paperHeight()), QPrinter.Millimeter)
-        printer.setFullPage(True)
+	printer = QPrinter() # instancja do QPrinter
+        printer.setOutputFormat(QPrinter.PdfFormat) # podanie ze plik bedzie pdfem
+        printer.setOutputFileName(self.filepath) # dodanie nazwy pliku
+        printer.setPaperSize(QSizeF(c.paperWidth(), c.paperHeight()), QPrinter.Millimeter) # wymiary
+        printer.setFullPage(True) 
         printer.setColorMode(QPrinter.Color)
         printer.setResolution(c.printResolution())
-
         
         pdfPainter = QPainter(printer)
         paperRectMM = printer.pageRect(QPrinter.Millimeter)
