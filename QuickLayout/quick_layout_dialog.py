@@ -51,6 +51,25 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # otwieranie okienka z opcją zapisu pliku
         self.filepath = QFileDialog.getSaveFileName()
 
+    def drukujDoPDF(self, c):
+	# c - kompozycja qgisa
+	printer = QPrinter()
+        printer.setOutputFormat(QPrinter.PdfFormat)
+        file_path = self.filepath
+        printer.setOutputFileName(file_path)
+        printer.setPaperSize(QSizeF(c.paperWidth(), c.paperHeight()), QPrinter.Millimeter)
+        printer.setFullPage(True)
+        printer.setColorMode(QPrinter.Color)
+        printer.setResolution(c.printResolution())
+
+        
+        pdfPainter = QPainter(printer)
+        paperRectMM = printer.pageRect(QPrinter.Millimeter)
+        paperRectPixel = printer.pageRect(QPrinter.DevicePixel)
+        c.render(pdfPainter, paperRectPixel, paperRectMM)
+        pdfPainter.end()
+        print("done")
+
     def mapa(self):
         mapRender = self.iface.mapCanvas().mapRenderer()
         c = QgsComposition(mapRender)
@@ -62,4 +81,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         composerMap = QgsComposerMap(c, x, y, w, h)
         c.addItem(composerMap)
 
-        self.openBrowse() # 
+        self.openBrowse()
+        if self.btnPDF.isChecked():
+	    self.drukujDoPDF(c)
