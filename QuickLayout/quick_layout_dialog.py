@@ -51,3 +51,13 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # otwieranie okienka z opcją zapisu pliku
         self.filepath = QFileDialog.getSaveFileName()
 
+        def mapa(self):
+            mapRender = self.iface.mapCanvas().mapRender()
+            c = QgsComposition(mapRenderer)
+            c.setPlotStyle(qgsComposition.Print)
+
+            # dodanie mapy do wydruku
+            x, y =0, 0
+            w, h = c.paperWidth(), c.paperHeight()
+            composerMap = QgsComposerMap(c, x, y, w, h)
+            c.addItem(composerMap)
