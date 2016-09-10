@@ -109,7 +109,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             legend = QgsComposerLegend(c)
             #legend.model().setLayerSet(mapRender.layerSet())
             #wys = legend.
-            #legend.move(0, h-)
+            legend.move(0, h-50)
             c.addItem(legend)
         
         if self.chStrz.isChecked():
