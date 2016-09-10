@@ -130,4 +130,4 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
         
         else:
-            QMessageBox.information(self,u'Błąd',u'Musisz wybrać format zapisu')
+            QMessageBox.warning(self,u'Błąd',u'Musisz wybrać format zapisu')
