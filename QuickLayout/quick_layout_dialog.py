@@ -115,7 +115,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
             arrow = QgsComposerArrow(c)
-            arrow.move(w-10, 0)
+            arrow.move(w-20, 0)
             c.addItem(arrow)
 
         #### wybieranie formatu zapisu
