@@ -103,6 +103,22 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         composerMap = QgsComposerMap(c, x, y, w, h)
         c.addItem(composerMap)
 
+        
+        if self.chLeg.isChecked():
+            # dodaj legende do mapy
+            legend = QgsComposerLegend(c)
+            #legend.model().setLayerSet(mapRender.layerSet())
+            #wys = legend.
+            #legend.move(0, h-)
+            c.addItem(legend)
+        
+        if self.chStrz.isChecked():
+            # dodaj strzalke polnocy
+            arrow = QgsComposerArrow(c)
+            arrow.move(w-10, 0)
+            c.addItem(arrow)
+
+        #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
             self.openBrowse(".pdf")
 	    self.drukujDoPDF(c)
