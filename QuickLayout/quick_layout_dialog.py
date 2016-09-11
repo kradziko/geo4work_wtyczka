@@ -46,6 +46,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         self.iface = iface
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
+        self.btnAnul.clicked.connect(self.anuluj) # przypisuje metode anuluj do  klikniecia przycisku Anuluj
 
     def openBrowse(self, rozszerzenie):
         # otwieranie okienka z opcją zapisu pliku
@@ -133,3 +134,8 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         
         else:
             QMessageBox.warning(self,u'Błąd',u'Musisz wybrać format zapisu')
+
+    def anuluj(self)
+        #zamkniecie wtyczki
+        QWidget.close(self)
+
