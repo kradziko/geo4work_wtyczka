@@ -98,7 +98,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         c.setPlotStyle(QgsComposition.Print)
 
         # dodanie mapy do wydruku
-        x, y =0, 0
+        x, y = 0, 0
         w, h = c.paperWidth(), c.paperHeight()
         composerMap = QgsComposerMap(c, x, y, w, h)
         c.addItem(composerMap)
@@ -106,17 +106,19 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         
         if self.chLeg.isChecked():
             # dodaj legende do mapy
-            legend = QgsComposerLegend(c)
-            #legend.model().setLayerSet(mapRender.layerSet())
-            #wys = legend.
-            legend.move(0, h-50)
-            c.addItem(legend)
+            legend = QgsComposerLegend(c)               # inicjalizacja legendy
+            legend.model().setLayerSet(mapRender.layerSet())
+            legend.setFrameEnabled(True)                # ramka legendy
+            hLeg = legend.ItemHeight                    # wysokosc legendy
+            legend.move(5, h-hLeg*2-5)                  # ustawienie pozycji legendy na mapie
+            c.addItem(legend)                           # dodanie legendy do mapy
         
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
-            arrow = QgsComposerArrow(c)
-            arrow.move(w-20, 0)
-            c.addItem(arrow)
+            arrow = QgsComposerArrow(c)                 # inicjalizacja strzalki
+            wArr = arrow.ItemWidth                      # szerokosc strzalki
+            arrow.move(w-wArr-5, 5)                     # ustawienie pozycji strzalki na mapie
+            c.addItem(arrow)                            # dodanie strzalki do mapy
 
         #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
