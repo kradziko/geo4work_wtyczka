@@ -135,7 +135,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         else:
             QMessageBox.warning(self,u'Błąd',u'Musisz wybrać format zapisu')
 
-    def anuluj(self)
+    def anuluj(self):
         #zamkniecie wtyczki
         QWidget.close(self)
 
