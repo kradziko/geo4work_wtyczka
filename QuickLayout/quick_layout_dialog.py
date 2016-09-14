@@ -124,9 +124,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
-            arrow = QgsComposerArrow(c)                 # inicjalizacja strzalki
-            wArr = arrow.ItemWidth                      # szerokosc strzalki
-            arrow.move(w-wArr-5, 5)                     # ustawienie pozycji strzalki na mapie
+            arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
         #### wybieranie formatu zapisu
