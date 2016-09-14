@@ -111,7 +111,14 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         if self.chLeg.isChecked():
             # dodaj legende do mapy
             legend = QgsComposerLegend(c)               # inicjalizacja legendy
-            legend.model().setLayerSet(mapRender.layerSet())
+            layerGroup = QgsLayerTreeGroup()
+            n = 0
+            for the_layer in self.iface.mapCanvas().layers():
+                layerGroup.insertLayer(n, the_layer)
+                n += 1
+            #legend.model().setLayerSet(mapRender.layerSet())
+            legend.modelV2().setRootGroup(layerGroup)
+            
             legend.setFrameEnabled(True)                # ramka legendy
             legend.move(5, 5)                  # ustawienie pozycji legendy na mapie
             c.addItem(legend)                           # dodanie legendy do mapy
