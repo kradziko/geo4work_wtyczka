@@ -148,7 +148,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
             self.openBrowse(".pdf")
-            QProgressBar(QWidget())
             if self.filepath != "":
 	        self.drukujDoPDF(c)
                 QMessageBox.information(self, u'Sukces!', u'Zapisano dokument pdf')
