@@ -129,12 +129,14 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         if self.btnPDF.isChecked():
             self.openBrowse(".pdf")
 	    self.drukujDoPDF(c)
-            QMessageBox.information(self, u'Sukces!', u'Zapisano dokument pdf')
+            if self.filepath != "":
+                QMessageBox.information(self, u'Sukces!', u'Zapisano dokument pdf')
 
         elif self.btnPNG.isChecked():
             self.openBrowse(".png")
 	    self.drukujDoPNG(c)
-            QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
+            if self.filepath != "":
+                QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
         
         else:
             QMessageBox.warning(self,u'Błąd',u'Musisz wybrać format zapisu')
