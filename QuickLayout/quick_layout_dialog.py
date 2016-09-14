@@ -43,6 +43,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+        self.setWindowTitle("Wydruk mapy") # zmiana tytułu okienka wtyczki
         self.iface = iface
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
