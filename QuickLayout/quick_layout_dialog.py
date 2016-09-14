@@ -52,6 +52,9 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # otwieranie okienka z opcją zapisu pliku
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
+        progress = QProgressDialog("Zapisywanie","OK",0,0,self)
+        progress.setWindowModality(QtCore.Qt.WindowModal)
+        progress.show()
         self.filepath = qfd.getSaveFileName()
         # self.filepath += rozszerzenie
         
@@ -74,7 +77,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         print("done")
 
 
-    def drukujDoPNG(self, c):	
+    def drukujDoPNG(self, c):
         dpi = c.printResolution()
         dpmm = dpi / 25.4
         width = int(dpmm * c.paperWidth())
@@ -96,12 +99,20 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         image.save(self.filepath, "png")
         print("Utworzono png")
 
-    def progress(self):
-        msgBox = QMessageBox.information(self, u'Trwa zapisywanie', u'trwa zapisywanie')
-        l = msgBox.layout()
-        prog = QProgressBar()
-        l.addWidget(prog, l.rowCount(), 0, 1, l.columnCount(), Qt.AlignCenter)
-        msgBox.show()
+  #  def progress(self):
+       # count = self.project.rowCount()
+       # proDial = QProgressDialog ("Zapisywanie","Zapisuje mape",0 , count,self)
+        
+        #proDial.setWindowModality(Qt.WindowModal)
+        #proDial.show()
+
+       # for i in range(count):
+          #  proDial.setValue(i)
+         #   if proDial.wasCanceled():
+        #        break
+       # proDial.setValue(count)
+        
+            
 
     def mapa(self):
         mapRender = self.iface.mapCanvas().mapRenderer()
@@ -146,7 +157,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             self.openBrowse(".png")
             if self.filepath != "":
 	        self.drukujDoPNG(c)
-                self.progress()
+               # self.progress()
                 QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
         
         else:
