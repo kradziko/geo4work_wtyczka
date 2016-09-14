@@ -116,25 +116,22 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 
         
         if self.chLeg.isChecked():
-            # dodaj legende do mapy
+            # dodaj legende do mapy z warstwami widocznymi w oknie widoku
             legend = QgsComposerLegend(c)               # inicjalizacja legendy
-            layerGroup = QgsLayerTreeGroup()
-            n = 0
+            layerGroup = QgsLayerTreeGroup()            # utworzenie grupy warstw
+            n = 0                                       # licznik id
+            # petla iteruje po liscie aktywnych warstw
             for the_layer in self.iface.mapCanvas().layers():
-                layerGroup.insertLayer(n, the_layer)
-                n += 1
-            #legend.model().setLayerSet(mapRender.layerSet())
+                layerGroup.insertLayer(n, the_layer)    # dodanie widocznej warstwy do grupy warstw layerGroup
+                n += 1                                  # zwiekszanie id o 1
             legend.modelV2().setRootGroup(layerGroup)
-            
             legend.setFrameEnabled(True)                # ramka legendy
-            legend.move(5, 5)                  # ustawienie pozycji legendy na mapie
+            legend.move(5, 5)                           # ustawienie pozycji legendy na mapie
             c.addItem(legend)                           # dodanie legendy do mapy
         
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
-            arrow = QgsComposerArrow(c)                 # inicjalizacja strzalki
-            wArr = arrow.ItemWidth                      # szerokosc strzalki
-            arrow.move(w-wArr-5, 5)                     # ustawienie pozycji strzalki na mapie
+            arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
         #### wybieranie formatu zapisu
