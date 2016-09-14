@@ -52,7 +52,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # otwieranie okienka z opcją zapisu pliku
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
-        self.filepath = qfd.getSaveFileName(self, "", "" , "Dokumenty typu (*"+rozszerzenie+")")
+        self.filepath = qfd.getSaveFileName()
         # self.filepath += rozszerzenie
         
 
@@ -118,11 +118,16 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         if self.chLeg.isChecked():
             # dodaj legende do mapy
             legend = QgsComposerLegend(c)               # inicjalizacja legendy
-            legend.model().setLayerSet(mapRender.layerSet())
+            layerGroup = QgsLayerTreeGroup()
+            n = 0
+            for the_layer in self.iface.mapCanvas().layers():
+                layerGroup.insertLayer(n, the_layer)
+                n += 1
+            #legend.model().setLayerSet(mapRender.layerSet())
+            legend.modelV2().setRootGroup(layerGroup)
+            
             legend.setFrameEnabled(True)                # ramka legendy
-            hLeg = legend.ItemHeight                    # wysokosc legendy
-            print hLeg
-            legend.move(5, h-hLeg*2-5)                  # ustawienie pozycji legendy na mapie
+            legend.move(5, 5)                  # ustawienie pozycji legendy na mapie
             c.addItem(legend)                           # dodanie legendy do mapy
         
         if self.chStrz.isChecked():
@@ -135,6 +140,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
             self.openBrowse(".pdf")
+            QProgressBar(QWidget())
             if self.filepath != "":
 	        self.drukujDoPDF(c)
                 QMessageBox.information(self, u'Sukces!', u'Zapisano dokument pdf')
