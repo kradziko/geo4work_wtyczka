@@ -52,7 +52,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # otwieranie okienka z opcją zapisu pliku
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
-        self.filepath = qfd.getSaveFileName()
+        self.filepath = qfd.getSaveFileName(self, "", "" , "Dokumenty typu (*"+rozszerzenie+")")
         # self.filepath += rozszerzenie
         
 
