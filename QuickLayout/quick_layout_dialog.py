@@ -96,6 +96,13 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         image.save(self.filepath, "png")
         print("Utworzono png")
 
+    def progress(self):
+        msgBox = QMessageBox.information(self, u'Trwa zapisywanie', u'trwa zapisywanie')
+        l = msgBox.layout()
+        prog = QProgressBar()
+        l.addWidget(prog, l.rowCount(), 0, 1, l.columnCount(), Qt.AlignCenter)
+        msgBox.show()
+
     def mapa(self):
         mapRender = self.iface.mapCanvas().mapRenderer()
         c = QgsComposition(mapRender)
@@ -136,6 +143,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             self.openBrowse(".png")
             if self.filepath != "":
 	        self.drukujDoPNG(c)
+                self.progress()
                 QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
         
         else:
