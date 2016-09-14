@@ -50,8 +50,11 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 
     def openBrowse(self, rozszerzenie):
         # otwieranie okienka z opcją zapisu pliku
-        self.filepath = QFileDialog.getSaveFileName()
-        self.filepath += rozszerzenie
+        qfd = QFileDialog()
+        qfd.setDefaultSuffix(rozszerzenie)
+        self.filepath = qfd.getSaveFileName()
+        # self.filepath += rozszerzenie
+        
 
     def drukujDoPDF(self, c):
 	# c - kompozycja qgisa
@@ -111,6 +114,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             legend.model().setLayerSet(mapRender.layerSet())
             legend.setFrameEnabled(True)                # ramka legendy
             hLeg = legend.ItemHeight                    # wysokosc legendy
+            print hLeg
             legend.move(5, h-hLeg*2-5)                  # ustawienie pozycji legendy na mapie
             c.addItem(legend)                           # dodanie legendy do mapy
         
@@ -134,6 +138,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         
         else:
             QMessageBox.warning(self,u'Błąd',u'Musisz wybrać format zapisu')
+
 
     def anuluj(self):
         #zamkniecie wtyczki
