@@ -78,7 +78,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 	# c - kompozycja qgisa
 	printer = QPrinter() # instancja do QPrinter
         printer.setOutputFormat(QPrinter.PdfFormat) # podanie ze plik bedzie pdfem
-        printer.setOutputFileName(self.filepath) # dodanie nazwy pliku
+        printer.setOutputFileName(self.filepath+".pdf") # dodanie nazwy pliku
         printer.setPaperSize(QSizeF(c.paperWidth(), c.paperHeight()), QPrinter.Millimeter) # wymiary
         printer.setFullPage(True) 
         printer.setColorMode(QPrinter.Color)
@@ -111,7 +111,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         c.render(imagePainter, targetArea, sourceArea)
         imagePainter.end()
 
-        image.save(self.filepath, "png")
+        image.save(self.filepath+".png", "png")
         print("Utworzono png")
 
 
