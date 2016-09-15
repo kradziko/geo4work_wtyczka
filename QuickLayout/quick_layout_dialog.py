@@ -43,6 +43,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+        self.setWindowTitle("Wydruk mapy") # zmiana tytułu okienka wtyczki
         self.iface = iface
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
@@ -145,6 +146,30 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
+        if self.chSkal.isChecked():
+            # dodaje skalę
+            skala = QgsComposerScaleBar(c)
+            skala.setStyle('Numeric')                       #numeryczna
+            skala.setComposerMap(composerMap)
+            skala.applyDefaultSize()
+            skala.move(5, h-10)
+            c.addItem(skala)                                #dodanie skali do mapy
+
+            
+        # dodawanie tytułu, jak chcecie dodajcie ifa zapobiegającemu pustej rubryczce
+        tytul = QgsComposerLabel(c)
+        tytul.setText(self.linTyt.text())
+        czcionka = QFont()
+        czcionka.setPixelSize(128)   #rozmiar czcionki
+        czcionka.setWeight(75)      #pogrubiona czcionka
+        tytul.setFont(czcionka)
+        tytul.adjustSizeToText()
+        tytul.setVAlign(Qt.AlignVCenter) #z jakiegoś powodu nie chce to działać, może wy coś poradzicie (wyrównanie do środka)
+        tytul.vAlign()
+        c.addItem(tytul)
+        
+        
+            
         #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
             self.openBrowse(".pdf")
