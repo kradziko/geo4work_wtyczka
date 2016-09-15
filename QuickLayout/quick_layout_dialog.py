@@ -156,17 +156,19 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             c.addItem(skala)                                #dodanie skali do mapy
 
             
-        # dodawanie tytułu, jak chcecie dodajcie ifa zapobiegającemu pustej rubryczce
-        tytul = QgsComposerLabel(c)
-        tytul.setText(self.linTyt.text())
-        czcionka = QFont()
-        czcionka.setPixelSize(128)   #rozmiar czcionki
-        czcionka.setWeight(75)      #pogrubiona czcionka
-        tytul.setFont(czcionka)
-        tytul.adjustSizeToText()
-        tytul.setVAlign(Qt.AlignVCenter) #z jakiegoś powodu nie chce to działać, może wy coś poradzicie (wyrównanie do środka)
-        tytul.vAlign()
-        c.addItem(tytul)
+        if self.linTyt.text():
+            tytul = QgsComposerLabel(c)
+            tytul.setText(self.linTyt.text())
+            czcionka = QFont()
+            czcionka.setPixelSize(128)   #rozmiar czcionki
+            czcionka.setWeight(75)      #pogrubiona czcionka
+            tytul.setFont(czcionka)
+            tytul.adjustSizeToText()
+            tytul.setVAlign(Qt.AlignVCenter) #z jakiegoś powodu nie chce to działać, może wy coś poradzicie (wyrównanie do środka)
+            tytul.vAlign()
+            c.addItem(tytul)
+        else:
+            QMessageBox.warning(self,u'Błąd',u'nie wpisano tytułu')
         
         
             
