@@ -130,8 +130,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
         if self.chSkal.isChecked():
-            # dodaj skalę
-            #skala = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
+            # dodaje skalę
             skala = QgsComposerScaleBar(c)
             skala.setStyle('Numeric')                       #numeryczna
             skala.setComposerMap(composerMap)
