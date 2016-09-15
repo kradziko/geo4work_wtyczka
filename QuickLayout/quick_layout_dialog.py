@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 
-import os, sys
+import os, sys, time
 
 from PyQt4 import QtGui, uic
 from PyQt4.QtGui import *
@@ -53,8 +53,25 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
         self.filepath = qfd.getSaveFileName()
+        if qfd.acceptMode() == 0:
+            self.progress()
         # self.filepath += rozszerzenie
         
+    def progress(self):
+        file = range(30)
+        number = len(file)
+        progressWasCancelled = False
+        prog = QProgressDialog("Zapisuje","Przerwij",0, number)
+        prog.setWindowModality(QtCore.Qt.WindowModal)
+        prog.setMinimumDuration(0)
+        for lNumber, line in enumerate(file):
+            prog.setValue(lNumber)
+            if prog.wasCanceled():
+                progressWasCancelled = True
+                break
+            time.sleep(0.05)
+        prog.setValue(number)
+        prog.deleteLater()
 
     def drukujDoPDF(self, c):
 	# c - kompozycja qgisa
