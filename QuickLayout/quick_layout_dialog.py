@@ -54,7 +54,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
         self.filepath = qfd.getSaveFileName()
-        if qfd.acceptMode() == 0:
+        if qfd.acceptMode() == 1:
             self.progress()
         # self.filepath += rozszerzenie
         
@@ -167,6 +167,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             tytul.setVAlign(Qt.AlignVCenter) #z jakiegoś powodu nie chce to działać, może wy coś poradzicie (wyrównanie do środka)
             tytul.vAlign()
             c.addItem(tytul)
+            tytul.move(w/2-len(tytul.text())*7.5/2, 15)
         else:
             QMessageBox.warning(self,u'Błąd',u'nie wpisano tytułu')
         
