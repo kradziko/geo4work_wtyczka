@@ -53,11 +53,23 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # otwieranie okienka z opcją zapisu pliku
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
+        qfd.setAcceptMode(QFileDialog.AcceptSave)
+        qfd.setNameFilters(['Dokument ' + rozszerzenie + '(*.'+rozszerzenie+')'])
+        if qfd.exec_() == QtGui.QDialog.Accepted:
+            #print(qfd.selectedFiles())
+            self.filepath = qfd.selectedFiles()[0]
+        else:
+            print('Cancelled')
+       
+    def openBrowse2(self, rozszerzenie):
+        # otwieranie okienka z opcją zapisu pliku
+        qfd = QFileDialog()
+        qfd.setDefaultSuffix(rozszerzenie)
         self.filepath = qfd.getSaveFileName()
         if qfd.acceptMode() == 1:
             self.progress()
         # self.filepath += rozszerzenie
-        
+ 
     def progress(self):
         file = range(30)
         number = len(file)
@@ -78,7 +90,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 	# c - kompozycja qgisa
 	printer = QPrinter() # instancja do QPrinter
         printer.setOutputFormat(QPrinter.PdfFormat) # podanie ze plik bedzie pdfem
-        printer.setOutputFileName(self.filepath+".pdf") # dodanie nazwy pliku
+        printer.setOutputFileName(self.filepath) # dodanie nazwy pliku
         printer.setPaperSize(QSizeF(c.paperWidth(), c.paperHeight()), QPrinter.Millimeter) # wymiary
         printer.setFullPage(True) 
         printer.setColorMode(QPrinter.Color)
@@ -111,7 +123,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         c.render(imagePainter, targetArea, sourceArea)
         imagePainter.end()
 
-        image.save(self.filepath+".png", "png")
+        image.save(self.filepath, "png")
         print("Utworzono png")
 
 
@@ -175,13 +187,13 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             
         #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
-            self.openBrowse(".pdf")
+            self.openBrowse("pdf")
             if self.filepath != "":
 	        self.drukujDoPDF(c)
                 QMessageBox.information(self, u'Sukces!', u'Zapisano dokument pdf')
 
         elif self.btnPNG.isChecked():
-            self.openBrowse(".png")
+            self.openBrowse("png")
             if self.filepath != "":
 	        self.drukujDoPNG(c)
                 QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
