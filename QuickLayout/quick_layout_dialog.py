@@ -60,7 +60,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             self.filepath = qfd.selectedFiles()[0]
         else:
             print('Cancelled')
-            #test
        
     def openBrowse2(self, rozszerzenie):
         # otwieranie okienka z opcją zapisu pliku
