@@ -121,9 +121,9 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         c.setPlotStyle(QgsComposition.Print)
 
         # dodanie mapy do wydruku
-        x, y = 20, 20
+        x, y = 40, 40
         w, h = c.paperWidth(), c.paperHeight()
-        composerMap = QgsComposerMap(c, x, y, w-40, h-40)
+        composerMap = QgsComposerMap(c, x, y, w-80, h-80)
         c.addItem(composerMap)
 
         
