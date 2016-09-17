@@ -44,22 +44,43 @@
          <property name="text">
           <string>Dodaj skalę</string>
          </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QRadioButton" name="btnSNum">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>numeryczna</string>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">btnScal</string>
+           </attribute>
           </widget>
          </item>
          <item>
           <widget class="QRadioButton" name="btnSLin">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>liniowa</string>
            </property>
+           <attribute name="buttonGroup">
+            <string notr="true">btnScal</string>
+           </attribute>
           </widget>
          </item>
          <item>
@@ -194,4 +215,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="btnScal"/>
+ </buttongroups>
 </ui>
