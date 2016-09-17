@@ -43,7 +43,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
-        self.setWindowTitle("Wydruk mapy") # zmiana tytułu okienka wtyczki
+        self.setWindowTitle("Wydruk mapy z widoku projektu") # zmiana tytułu okienka wtyczki
         self.iface = iface
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
@@ -56,7 +56,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         qfd.setAcceptMode(QFileDialog.AcceptSave)
         qfd.setNameFilters(['Dokument ' + rozszerzenie + '(*.'+rozszerzenie+')'])
         if qfd.exec_() == QtGui.QDialog.Accepted:
-            #print(qfd.selectedFiles())
             self.filepath = qfd.selectedFiles()[0]
         else:
             print('Cancelled')
@@ -66,9 +65,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         qfd = QFileDialog()
         qfd.setDefaultSuffix(rozszerzenie)
         self.filepath = qfd.getSaveFileName()
-        if qfd.acceptMode() == 1:
-            self.progress()
-        # self.filepath += rozszerzenie
  
     def progress(self):
         file = range(30)
