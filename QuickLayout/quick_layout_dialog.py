@@ -158,13 +158,22 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
+            
         if self.chSkal.isChecked():
-            # dodaje skalę
+            # dodaje skalę        
+#            if not (self.btnSNum.isChecked() or self.btnSLin.isChecked()):
+#               QMessageBox.critical(self,u'Błąd',u'Musisz wybrać rodzaj skali')
             skala = QgsComposerScaleBar(c)
-            skala.setStyle('Numeric')                       #numeryczna
             skala.setComposerMap(composerMap)
-            skala.applyDefaultSize()
-            skala.move(5, h-10)
+            if self.btnSNum.isChecked():
+                skala.setStyle('Numeric')                       #numeryczna
+                czcionka2 = QFont()
+                czcionka2.setPixelSize(100)
+                skala.setFont(czcionka2)
+            else:
+                skala.applyDefaultSize()
+                skala.setNumSegmentsLeft(0)
+            skala.move(5, h-18)
             c.addItem(skala)                                #dodanie skali do mapy
 
             
@@ -181,7 +190,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             c.addItem(tytul)
             tytul.move(w/2-len(tytul.text())*7.5/2, 15)
         else:
-            QMessageBox.warning(self,u'Błąd',u'nie wpisano tytułu')
+            QMessageBox.warning(self,u'Błąd',u'Nie wpisano tytułu')
         
         
             
