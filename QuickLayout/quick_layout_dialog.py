@@ -48,7 +48,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         self.filepath = "" # przechowuje sciezke do pliku wyjsciowego
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
         self.btnAnul.clicked.connect(self.anuluj) # przypisuje metode anuluj do  klikniecia przycisku Anuluj
-
+        self.chSkal.clicked.connect(self.wylacz)
     def openBrowse(self, rozszerzenie):
         # otwieranie okienka z opcją zapisu pliku
         qfd = QFileDialog()
@@ -122,7 +122,14 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         image.save(self.filepath, "png")
         print("Utworzono png")
 
-
+    def wylacz(self):
+        if self.chSkal.isChecked():
+            self.btnSNum.setEnabled(True)
+            self.btnSLin.setEnabled(True)
+        else:
+            self.btnSNum.setDisabled(True)
+            self.btnSLin.setDisabled(True)
+    
     def mapa(self):
         mapRender = self.iface.mapCanvas().mapRenderer()
         c = QgsComposition(mapRender)
@@ -154,7 +161,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
-            
+
         if self.chSkal.isChecked():
             # dodaje skalę        
 #            if not (self.btnSNum.isChecked() or self.btnSLin.isChecked()):
