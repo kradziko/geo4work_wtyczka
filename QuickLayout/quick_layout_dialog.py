@@ -148,12 +148,19 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             layerGroup = QgsLayerTreeGroup()            # utworzenie grupy warstw
             n = 0                                       # licznik id
             # petla iteruje po liscie aktywnych warstw
-            for the_layer in self.iface.mapCanvas().layers():
+            visibleLayers = self.iface.mapCanvas().layers()
+            visibleLayersCount = len(visibleLayers)
+            for the_layer in visibleLayers:
                 layerGroup.insertLayer(n, the_layer)    # dodanie widocznej warstwy do grupy warstw layerGroup
                 n += 1                                  # zwiekszanie id o 1
             legend.modelV2().setRootGroup(layerGroup)
             legend.setFrameEnabled(True)                # ramka legendy
-            legend.move(5, 5)                           # ustawienie pozycji legendy na mapie
+            legend.move(100, h-35)                        # ustawienie pozycji legendy na mapie
+
+            if visibleLayersCount > 3:
+                import math
+                x = math.ceil(visibleLayersCount/3.)
+                legend.setColumnCount(x)
             c.addItem(legend)                           # dodanie legendy do mapy
         
         if self.chStrz.isChecked():
@@ -200,13 +207,13 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         #### wybieranie formatu zapisu
         if self.btnPDF.isChecked():
             self.openBrowse("pdf")
-            if self.filepath != "":
+            if self.filepath is not "":
 	        self.drukujDoPDF(c)
                 QMessageBox.information(self, u'Sukces!', u'Zapisano dokument pdf')
 
         elif self.btnPNG.isChecked():
             self.openBrowse("png")
-            if self.filepath != "":
+            if self.filepath is not "":
 	        self.drukujDoPNG(c)
                 QMessageBox.information(self, u'Sukces!', u'Zapisano obraz w formacie png')
         
