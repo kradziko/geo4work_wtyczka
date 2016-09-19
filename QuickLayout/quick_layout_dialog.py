@@ -155,7 +155,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
                 n += 1                                  # zwiekszanie id o 1
             legend.modelV2().setRootGroup(layerGroup)
             legend.setFrameEnabled(True)                # ramka legendy
-            legend.move(100, h-35)                      # ustawienie pozycji legendy na mapie
+            legend.move(110, h-35)                      # ustawienie pozycji legendy na mapie
 
             if visibleLayersCount > 3:
                 from math import ceil
