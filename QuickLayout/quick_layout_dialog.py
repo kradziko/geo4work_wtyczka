@@ -139,6 +139,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         x, y = 40, 40
         w, h = c.paperWidth(), c.paperHeight()
         composerMap = QgsComposerMap(c, x, y, w-80, h-80)
+        composerMap.setFrameEnabled(True)
         c.addItem(composerMap)
 
         
@@ -182,14 +183,15 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
                 czcionka2 = QFont()
                 czcionka2.setPixelSize(100)
                 skala.setFont(czcionka2)
+                skala.setItemPosition(w-70, h-5, QgsComposerItem.LowerRight)
             else:
                 skala.applyDefaultSize()
                 skala.setNumSegmentsLeft(0)
+                skala.setItemPosition(w-5, h-5, QgsComposerItem.LowerRight)
             #skala.move(5, h-18)
             #skalaSize = skala.paintAndDetermineSize(None)
-            skala.setAlignment(QgsComposerScaleBar.Left)
+            skala.setAlignment(QgsComposerScaleBar.Right)
             c.addItem(skala)                                #dodanie skali do mapy
-            skala.setItemPosition(w-100, h-5, QgsComposerItem.LowerRight)
 
 
             
