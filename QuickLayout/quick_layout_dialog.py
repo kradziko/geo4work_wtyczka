@@ -155,13 +155,15 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
                 n += 1                                  # zwiekszanie id o 1
             legend.modelV2().setRootGroup(layerGroup)
             legend.setFrameEnabled(True)                # ramka legendy
-            legend.move(110, h-35)                      # ustawienie pozycji legendy na mapie
+            #legend.move(110, h-35)                      # ustawienie pozycji legendy na mapie
 
             if visibleLayersCount > 3:
                 from math import ceil
                 x = ceil(visibleLayersCount/3.)
                 legend.setColumnCount(x)
+            legendSize = legend.paintAndDetermineSize(None)
             c.addItem(legend)                           # dodanie legendy do mapy
+            legend.setItemPosition(5, h-5, legendSize.width(), legendSize.height(), QgsComposerItem.LowerLeft)
         
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
@@ -183,22 +185,27 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             else:
                 skala.applyDefaultSize()
                 skala.setNumSegmentsLeft(0)
-            skala.move(5, h-18)
+            #skala.move(5, h-18)
+            #skalaSize = skala.paintAndDetermineSize(None)
+            skala.setAlignment(QgsComposerScaleBar.Left)
             c.addItem(skala)                                #dodanie skali do mapy
+            skala.setItemPosition(w-100, h-5, QgsComposerItem.LowerRight)
+
 
             
         if self.linTyt.text():
             tytul = QgsComposerLabel(c)
             tytul.setText(self.linTyt.text())
             czcionka = QFont()
-            czcionka.setPixelSize(128)   #rozmiar czcionki
+            czcionka.setPointSize(36)   #rozmiar czcionki
             czcionka.setWeight(75)      #pogrubiona czcionka
             tytul.setFont(czcionka)
             tytul.adjustSizeToText()
-            tytul.setVAlign(Qt.AlignVCenter) #z jakiegoś powodu nie chce to działać, może wy coś poradzicie (wyrównanie do środka)
-            tytul.vAlign()
+            #tytul.setVAlign(Qt.AlignVCenter) #z jakiegoś powodu nie chce to działać, może wy coś poradzicie (wyrównanie do środka)
+            #tytul.vAlign()
             c.addItem(tytul)
-            tytul.move(w/2-len(tytul.text())*7.5/2, 15)
+            tytul.setItemPosition(w/2, 10, QgsComposerItem.UpperMiddle)
+            #tytul.move(w/2-len(tytul.text())*7.5/2, 15)
         else:
             QMessageBox.warning(self,u'Błąd',u'Nie wpisano tytułu')
         
