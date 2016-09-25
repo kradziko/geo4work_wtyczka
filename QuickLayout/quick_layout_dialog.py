@@ -123,9 +123,14 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         sourceArea = QRectF(0, 0, c.paperWidth(), c.paperHeight())
         targetArea = QRectF(0, 0, width, height)
         c.render(imagePainter, targetArea, sourceArea)
-        imagePainter.end()
 
         image.save(self.filepath, "png")
+
+        if c.numPages() is 2:
+            c.renderPage(imagePainter, 1)
+            imagePainter.end()
+            image.save(self.filepath[:-4] + "2" + self.filepath[-4:], "png")
+        imagePainter.end()
         print("Utworzono png")
 
     def wylacz(self):
@@ -167,13 +172,16 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             #    x = ceil(visibleLayersCount/3.)
             #    legend.setColumnCount(x)
             print legend.symbolHeight(), legend.symbolWidth()
+            legend.setSymbolHeight(3.0)
+            legend.setSymbolWidth(5.0)
+            legend.font
             legend.setColumnCount(3)                    # 3 kolumny warstw w legendzie
-            #legend.setResizeToContents(True)
             legend.setSplitLayer(True)                  # warstwy nie są pogrupowane względem topologii
             legendSize = legend.paintAndDetermineSize(None)
             c.addItem(legend)                           # dodanie legendy do mapy
             #legend.setItemPosition(5, h-5, legendSize.width(), legendSize.height(), QgsComposerItem.LowerLeft, 2)
-            legend.setItemPosition(5, h+10, legendSize.width(), legendSize.height(), QgsComposerItem.UpperLeft, 2)
+            legend.setItemPosition(5, h+10, w, h, QgsComposerItem.UpperLeft, 2)
+            legend.setResizeToContents(True)
         
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
