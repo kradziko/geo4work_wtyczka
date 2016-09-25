@@ -176,11 +176,11 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             legend.setColumnCount(3)                    # 3 kolumny warstw w legendzie
             legend.setSplitLayer(True)                  # warstwy nie są pogrupowane względem topologii
             legendSize = legend.paintAndDetermineSize(None)
+            legend.setResizeToContents(True)
             c.addItem(legend)                           # dodanie legendy do mapy
             #legend.setItemPosition(5, h-5, legendSize.width(), legendSize.height(), QgsComposerItem.LowerLeft, 2)
             legend.setItemPosition(5, h+10, w, h, QgsComposerItem.UpperLeft, 2)
-            legend.setResizeToContents(True)
-        
+
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
             arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
