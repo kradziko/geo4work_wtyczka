@@ -122,10 +122,12 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         imagePainter = QPainter(image)
         sourceArea = QRectF(0, 0, c.paperWidth(), c.paperHeight())
         targetArea = QRectF(0, 0, width, height)
-        c.render(imagePainter, targetArea, sourceArea)
-        imagePainter.end()
-
+        c.renderPage(imagePainter, 0)
         image.save(self.filepath, "png")
+        if c.numPages() is 2: #dodanie 2 strony z legenda
+            c.renderPage(imagePainter, 1)
+            image.save(self.filepath[:-4]+"_2"+self.filepath[-4:], "png")
+        imagePainter.end()
         print("Utworzono png")
 
     def wylacz(self):
