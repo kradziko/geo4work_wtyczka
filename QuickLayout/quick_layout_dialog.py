@@ -126,10 +126,9 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 
         image.save(self.filepath, "png")
 
-        if c.numPages() is 2:
+        if c.numPages() is 2: #dodanie 2 strony z legenda
             c.renderPage(imagePainter, 1)
-            imagePainter.end()
-            image.save(self.filepath[:-4] + "2" + self.filepath[-4:], "png")
+            image.save(self.filepath[:-4]+"_2"+self.filepath[-4:], "png")
         imagePainter.end()
         print("Utworzono png")
 
@@ -174,7 +173,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             print legend.symbolHeight(), legend.symbolWidth()
             legend.setSymbolHeight(3.0)
             legend.setSymbolWidth(5.0)
-            legend.font
             legend.setColumnCount(3)                    # 3 kolumny warstw w legendzie
             legend.setSplitLayer(True)                  # warstwy nie są pogrupowane względem topologii
             legendSize = legend.paintAndDetermineSize(None)
