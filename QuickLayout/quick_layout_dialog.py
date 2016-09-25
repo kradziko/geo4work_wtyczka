@@ -49,6 +49,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         self.btnDruk.clicked.connect(self.mapa) # przypisuje metode mapa do  klikniecia przycisku Drukuj
         self.btnAnul.clicked.connect(self.anuluj) # przypisuje metode anuluj do  klikniecia przycisku Anuluj
         self.chSkal.clicked.connect(self.wylacz)
+
     def openBrowse(self, rozszerzenie):
         # otwieranie okienka z opcją zapisu pliku
         qfd = QFileDialog()
@@ -89,13 +90,18 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         printer.setOutputFileName(self.filepath) # dodanie nazwy pliku
         printer.setPaperSize(QSizeF(c.paperWidth(), c.paperHeight()), QPrinter.Millimeter) # wymiary
         printer.setFullPage(True) 
+        printer.setPrintRange(c.numPages()) # this is for printing all pages
         printer.setColorMode(QPrinter.Color)
         printer.setResolution(c.printResolution())
-        
+       
         pdfPainter = QPainter(printer)
-        paperRectMM = printer.pageRect(QPrinter.Millimeter)
-        paperRectPixel = printer.pageRect(QPrinter.DevicePixel)
-        c.render(pdfPainter, paperRectPixel, paperRectMM)
+        #paperRectMM = printer.pageRect(QPrinter.Millimeter)
+        #paperRectPixel = printer.pageRect(QPrinter.DevicePixel)
+        #c.render(pdfPainter, paperRectPixel, paperRectMM)
+        c.renderPage(pdfPainter, 0)
+        if c.numPages() is 2:
+            printer.newPage()
+            c.renderPage(pdfPainter, 1)
         pdfPainter.end()
         print("done")
 
@@ -134,17 +140,17 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         mapRender = self.iface.mapCanvas().mapRenderer()
         c = QgsComposition(mapRender)
         c.setPlotStyle(QgsComposition.Print)
-
         # dodanie mapy do wydruku
-        x, y = 40, 40
+        x, y = 30, 30
         w, h = c.paperWidth(), c.paperHeight()
-        composerMap = QgsComposerMap(c, x, y, w-80, h-80)
+        composerMap = QgsComposerMap(c, x, y, w-60, h-60)
         composerMap.setFrameEnabled(True)
         c.addItem(composerMap)
-
         
         if self.chLeg.isChecked():
             # dodaj legende do mapy z warstwami widocznymi w oknie widoku
+            c.setNumPages(2)                            # utworzenie dodatkowej strony dla legendy
+            c.setPagesVisible(True)
             legend = QgsComposerLegend(c)               # inicjalizacja legendy
             layerGroup = QgsLayerTreeGroup()            # utworzenie grupy warstw
             n = 0                                       # licznik id
@@ -155,22 +161,24 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
                 layerGroup.insertLayer(n, the_layer)    # dodanie widocznej warstwy do grupy warstw layerGroup
                 n += 1                                  # zwiekszanie id o 1
             legend.modelV2().setRootGroup(layerGroup)
-            legend.setFrameEnabled(True)                # ramka legendy
-            #legend.move(110, h-35)                      # ustawienie pozycji legendy na mapie
-
-            if visibleLayersCount > 3:
-                from math import ceil
-                x = ceil(visibleLayersCount/3.)
-                legend.setColumnCount(x)
+            #legend.setFrameEnabled(True)                # ramka legendy
+            #if visibleLayersCount > 3:
+            #    from math import ceil
+            #    x = ceil(visibleLayersCount/3.)
+            #    legend.setColumnCount(x)
+            print legend.symbolHeight(), legend.symbolWidth()
+            legend.setColumnCount(3)                    # 3 kolumny warstw w legendzie
+            #legend.setResizeToContents(True)
+            legend.setSplitLayer(True)                  # warstwy nie są pogrupowane względem topologii
             legendSize = legend.paintAndDetermineSize(None)
             c.addItem(legend)                           # dodanie legendy do mapy
-            legend.setItemPosition(5, h-5, legendSize.width(), legendSize.height(), QgsComposerItem.LowerLeft)
+            #legend.setItemPosition(5, h-5, legendSize.width(), legendSize.height(), QgsComposerItem.LowerLeft, 2)
+            legend.setItemPosition(5, h+10, legendSize.width(), legendSize.height(), QgsComposerItem.UpperLeft, 2)
         
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
             arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
-
 
         if self.chSkal.isChecked():
             # dodaje skalę        
@@ -183,17 +191,11 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
                 czcionka2 = QFont()
                 czcionka2.setPixelSize(100)
                 skala.setFont(czcionka2)
-                skala.setItemPosition(w-70, h-5, QgsComposerItem.LowerRight)
             else:
                 skala.applyDefaultSize()
                 skala.setNumSegmentsLeft(0)
-                skala.setItemPosition(w-5, h-5, QgsComposerItem.LowerRight)
-            #skala.move(5, h-18)
-            #skalaSize = skala.paintAndDetermineSize(None)
-            skala.setAlignment(QgsComposerScaleBar.Right)
+            skala.move(5, h-18)
             c.addItem(skala)                                #dodanie skali do mapy
-
-
             
         if self.linTyt.text():
             tytul = QgsComposerLabel(c)
