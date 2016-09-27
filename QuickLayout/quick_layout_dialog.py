@@ -175,7 +175,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
 
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
-            arrow = QgsComposerArrow(QPointF(w-10, 30), QPointF(w-10, 10), c) 
+            arrow = QgsComposerArrow(QPointF(w-15, 30), QPointF(w-15, 10), c) 
             c.addItem(arrow)                            # dodanie strzalki do mapy
 
         if self.chSkal.isChecked():
