@@ -163,7 +163,7 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             legend.setSymbolHeight(3.0)                 # zmiana wysokosci symbolu w legendzie
             legend.setSymbolWidth(5.0)                  # zmiana szerokosci symbolu w legendzie
             # zmiana odstepow pomiedzy kolejnymi warstwami w legendzie dzieki czemu miesci sie duzo warstw
-            legend.rstyle(QgsComposerLegendStyle.Symbol).setMargin(QgsComposerLegendStyle.Top, 1.0)
+            legend.rstyle(QgsComposerLegendStyle.Symbol).setMargin(QgsComposerLegendStyle.Top, 0.7)
             legend.setColumnCount(3)                    # 3 kolumny warstw w legendzie
             legend.setSplitLayer(True)                  # warstwy nie są pogrupowane względem topologii
             legendSize = legend.paintAndDetermineSize(None)
