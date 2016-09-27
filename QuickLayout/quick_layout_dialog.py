@@ -95,15 +95,11 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
         printer.setResolution(c.printResolution())
        
         pdfPainter = QPainter(printer)
-        #paperRectMM = printer.pageRect(QPrinter.Millimeter)
-        #paperRectPixel = printer.pageRect(QPrinter.DevicePixel)
-        #c.render(pdfPainter, paperRectPixel, paperRectMM)
         c.renderPage(pdfPainter, 0)
         if c.numPages() is 2:
             printer.newPage()
             c.renderPage(pdfPainter, 1)
         pdfPainter.end()
-        print("done")
 
 
     def drukujDoPNG(self, c):
@@ -130,7 +126,6 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             c.renderPage(imagePainter, 1)
             image.save(self.filepath[:-4]+"_2"+self.filepath[-4:], "png")
         imagePainter.end()
-        print("Utworzono png")
 
     def wylacz(self):
         if self.chSkal.isChecked():
@@ -160,26 +155,23 @@ class QuickLayoutDialog(QtGui.QDialog, FORM_CLASS):
             n = 0                                       # licznik id
             # petla iteruje po liscie aktywnych warstw
             visibleLayers = self.iface.mapCanvas().layers()
-            visibleLayersCount = len(visibleLayers)
+            visibleLayersCount = len(visibleLayers)     # pobranie dlugosci listy
             for the_layer in visibleLayers:
                 layerGroup.insertLayer(n, the_layer)    # dodanie widocznej warstwy do grupy warstw layerGroup
                 n += 1                                  # zwiekszanie id o 1
             legend.modelV2().setRootGroup(layerGroup)
-            #legend.setFrameEnabled(True)                # ramka legendy
-            #if visibleLayersCount > 3:
-            #    from math import ceil
-            #    x = ceil(visibleLayersCount/3.)
-            #    legend.setColumnCount(x)
-            print legend.symbolHeight(), legend.symbolWidth()
-            legend.setSymbolHeight(3.0)
-            legend.setSymbolWidth(5.0)
+            legend.setSymbolHeight(3.0)                 # zmiana wysokosci symbolu w legendzie
+            legend.setSymbolWidth(5.0)                  # zmiana szerokosci symbolu w legendzie
+            # zmiana odstepow pomiedzy kolejnymi warstwami w legendzie dzieki czemu miesci sie duzo warstw
+            legend.rstyle(QgsComposerLegendStyle.Symbol).setMargin(QgsComposerLegendStyle.Top, 1.0)
             legend.setColumnCount(3)                    # 3 kolumny warstw w legendzie
             legend.setSplitLayer(True)                  # warstwy nie są pogrupowane względem topologii
             legendSize = legend.paintAndDetermineSize(None)
             legend.setResizeToContents(True)
             c.addItem(legend)                           # dodanie legendy do mapy
-            #legend.setItemPosition(5, h-5, legendSize.width(), legendSize.height(), QgsComposerItem.LowerLeft, 2)
-            legend.setItemPosition(5, h+10, w, h, QgsComposerItem.UpperLeft, 2)
+            # ustawienie pozycji legendy na mapie na 2 kartce
+            legend.setItemPosition(5, h+8, legendSize.width(), legendSize.height(), QgsComposerItem.UpperLeft, 2)
+
 
         if self.chStrz.isChecked():
             # dodaj strzalke polnocy
