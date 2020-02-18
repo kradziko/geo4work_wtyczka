@@ -12,7 +12,7 @@ qgisMinimumVersion=2.0
 description=This plugin enables to make a quick layout.
 version=0.1
 author=GeoINFO
-email=anotherfable@gmial.com
+email=kra@giap.pl
 
 about=This plugin enables to make a quick layout.
 
