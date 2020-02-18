@@ -6,8 +6,8 @@
  This plugin enables to make a quick layout.
                              -------------------
         begin                : 2016-09-08
-        copyright            : (C) 2016 by GeoINFO
-        email                : anotherfable@gmial.com
+        copyright            : (C) 2016 by kr
+        email                : kra@giap.pl
         git sha              : $Format:%H$
  ***************************************************************************/
 
