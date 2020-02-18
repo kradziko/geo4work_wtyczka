@@ -1,11 +1,5 @@
 Plugin Builder Results
 
-Your plugin QuickLayout was created in:
-    E:\Madziulka\studia\geo4work\wtyczka\QuickLayout
-
-Your QGIS plugin directory is located at:
-    C:/Users/Dexterinki/.qgis2/python/plugins
-
 What's Next:
 
   * Copy the entire directory containing your new plugin to the QGIS plugin
