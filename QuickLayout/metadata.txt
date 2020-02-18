@@ -11,7 +11,7 @@ name=Quick Layout
 qgisMinimumVersion=2.0
 description=This plugin enables to make a quick layout.
 version=0.1
-author=GeoINFO
+author=Karolina Radzikowska
 email=kra@giap.pl
 
 about=This plugin enables to make a quick layout.
