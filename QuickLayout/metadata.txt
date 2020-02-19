@@ -28,7 +28,7 @@ repository=https://github.com/kradziko/geo4work_wtyczka
 # Tags are comma separated with spaces allowed
 tags=
 
-homepage=
+homepage=https://github.com/kradziko/geo4work_wtyczka/
 category=Plugins
 icon=icon.png
 # experimental flag
