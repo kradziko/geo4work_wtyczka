@@ -16,7 +16,7 @@ email=kra@giap.pl
 
 about=This plugin enables to make a quick layout.
 
-tracker=https://github.com/kradziko/geo4work_wtyczka
+tracker=https://github.com/kradziko/geo4work_wtyczka/issues
 repository=https://github.com/kradziko/geo4work_wtyczka
 # End of mandatory metadata
 
